@@ -1,0 +1,6 @@
+Flask
+psycopg2
+twilio
+Faker
+flask-cors
+gunicorn==19.9.0
