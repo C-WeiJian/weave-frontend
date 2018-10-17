@@ -58,7 +58,7 @@ window.addEventListener('beforeunload', leaveRoomIfJoined);
 $.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
   identity = data.identity;
 
-  document.getElementById('room-controls').style.display = 'block';
+  // document.getElementById('room-controls').style.display = 'block';
 
   // Bind button to join room
   document.getElementById('button-join').onclick = function () {
@@ -216,7 +216,7 @@ function leaveRoomIfJoined() {
 
 window.addEventListener("load", function () {
   function sendData() {
-    api = "https://weave-sg.herokuapp.com/echo";
+    api = "https://weave-sg.herokuapp.com/form";
 
     // collect the form data while iterating over the inputs
     var data = {};
@@ -235,7 +235,7 @@ window.addEventListener("load", function () {
     // }
     // Define what happens on successful data submission
     xhr.addEventListener("load", function(event) {
-      alert(event.target.responseText);
+      alert('Form data submitted');
     });
 
     // Define what happens in case of error
@@ -260,7 +260,7 @@ window.addEventListener("load", function () {
     // // The data sent is what the user provided in the form
     // XHR.send(FD);
   }
- 
+
   // Access the form element...
   var form = document.getElementById("myForm");
 

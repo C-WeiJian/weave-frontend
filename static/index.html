@@ -34,6 +34,10 @@
         <div class="left-row">
             CONFIGURATION
         </div>
+
+        <div class="button-container">
+            <button type="button" name="sound">Sound AED</button>
+        </div>
     </div>
 
     <!-- video broadcast -->
@@ -67,11 +71,13 @@
             <textarea name="other" placeholder="Other Key Observations"></textarea>
 
             <input name="ignore" type="submit" value="Send"/>
+
+            <input type="submit" name="bool_aedsound" value="Sound AED"/>
         </form>
         </div>
     </div>
     </div>
-  <!-- <div id="controls">
+  <div id="controls">
     <div id="preview">
       <p class="instructions">Hello Beautiful</p>
       <div id="local-media"></div>
@@ -85,7 +91,7 @@
     </div>
 
 
-  </div> -->
+  </div>
 
 <script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
 <script src="//media.twiliocdn.com/sdk/js/video/releases/1.14.0/twilio-video.js"></script>

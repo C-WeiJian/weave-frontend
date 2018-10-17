@@ -45,7 +45,7 @@ body {
 }
 
 .middle-col-block {
-    width: 50%;
+    min-width: 700px;
     min-height: 100vh;
     text-align: center;
     overflow: hidden;
@@ -114,21 +114,6 @@ body {
     width: 100%;
     height: 100%;
     background-color: #4D4D4D;
-}
-
-button {
-  /* float: left; */
-  padding: 6px 10px;
-  margin-top: 8px;
-  margin-left: 16px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #ccc;
 }
 
 #log {
@@ -202,6 +187,7 @@ button:hover {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	width: 100%;
+    padding-bottom: 5px;
 	padding: 3%;
 	background: #43D1AF;
 	border-bottom: 2px solid #30C29E;
@@ -214,6 +200,22 @@ button:hover {
 .form-style-6 input[type="button"]:hover{
 	background: #2EBC99;
 }
+
+button {
+  /* float: left; */
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-left: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ccc;
+}
+
 /* div#remote-media {
   height: 43%;
   width: 100%;
