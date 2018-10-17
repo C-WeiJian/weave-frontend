@@ -190,10 +190,33 @@ function leaveRoomIfJoined() {
 //     xhr.send(json);
 // }
 
-function submitform(){
-    var form=document.getElementById('myForm');
+// function submitform(){
+//     var form=document.getElementById('myForm');
 
-    form.action = "http://weave-sg.herokuapp.com/echo";
+//     api = "https://weave-sg.herokuapp.com/echo";
+
+//     // collect the form data while iterating over the inputs
+//     var data = {};
+//     for (var i = 0, ii = form.length; i < ii; ++i) {
+//         var input = form[i];
+//         data[input.name] = input.value;
+//     }
+//     console.log(data)
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('POST', api, true);
+//     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//             alert(xhr.responseText);
+//         }
+//     }
+//     xhr.send(JSON.stringify(data));
+
+// }
+
+window.addEventListener("load", function () {
+  function sendData() {
+    api = "https://weave-sg.herokuapp.com/echo";
 
     // collect the form data while iterating over the inputs
     var data = {};
@@ -201,16 +224,50 @@ function submitform(){
         var input = form[i];
         data[input.name] = input.value;
     }
+    console.log(data)
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', form.action);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            alert(xhr.responseText);
-        }
-    }
+    xhr.open('POST', api);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         alert(xhr.responseText);
+    //     }
+    // }
+    // Define what happens on successful data submission
+    xhr.addEventListener("load", function(event) {
+      alert(event.target.responseText);
+    });
+
+    // Define what happens in case of error
+    xhr.addEventListener("error", function(event) {
+      alert('Oops! Something went wrong.');
+    });
+
+
     xhr.send(JSON.stringify(data));
 
-}
-//return false;
-}
+
+    // var XHR = new XMLHttpRequest();
+
+    // // Bind the FormData object and the form element
+    // var FD = new FormData(form);
+
+
+
+    // // Set up our request
+    // XHR.open("POST", "https://weave-sg.herokuapp.com/echo");
+
+    // // The data sent is what the user provided in the form
+    // XHR.send(FD);
+  }
+ 
+  // Access the form element...
+  var form = document.getElementById("myForm");
+
+  // ...and take over its submit event.
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    sendData();
+  });
+});
