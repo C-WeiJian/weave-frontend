@@ -36,7 +36,7 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
 // from the room, if joined.
 window.addEventListener('beforeunload', leaveRoomIfJoined);
 
-$.getJSON('https://weave-sg.herokuapp.com/token', function(data) {
+$.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
   identity = data.identity;
 
   document.getElementById('room-controls').style.display = 'block';
@@ -84,7 +84,10 @@ function roomJoined(room) {
   room.participants.forEach(function(participant) {
     log("Already in Room: '" + participant.identity + "'");
     var previewContainer = document.getElementById('remote-media');
-    attachParticipantTracks(participant, previewContainer);
+    if (participant.identity == 'phone') {
+      attachParticipantTracks(participant, previewContainer);
+    };
+    
   });
 
   // When a participant joins, draw their video on screen
@@ -95,7 +98,10 @@ function roomJoined(room) {
   room.on('trackAdded', function(track, participant) {
     log(participant.identity + " added track: " + track.kind);
     var previewContainer = document.getElementById('remote-media');
-    attachTracks([track], previewContainer);
+    if (participant.identity == 'phone') {
+      attachTracks([track], previewContainer);
+    };
+    
   });
 
   room.on('trackRemoved', function(track, participant) {
