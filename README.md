@@ -1,5 +1,3 @@
-# weave-api
+# weave-front
 
-https://github.com/twilio/video-quickstart-js
-
-https://github.com/TwilioDevEd/sdk-starter-python
+https://weave-front.herokuapp.com/
