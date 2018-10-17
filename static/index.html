@@ -2,11 +2,76 @@
 <html>
 <head>
   <title>Twilio Video - Video Quickstart</title>
-  <link rel="stylesheet" href="../static/assets/css/main.css">
+  <!-- Bootstrap -->
+  <link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- web-fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700,800" rel="stylesheet">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="static/assets/css/main.css">
+
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 </head>
-<body>
-  <div id="remote-media"></div>
-  <div id="controls">
+<body onload="startTime()">
+    <div class="col-block">
+
+    <!-- dashboard controls -->
+    <div class="left-col-block">
+        <div class="left-header">
+            <div class="col-md-12">
+                <img src="static/assets/img/scdf_logo.png" alt="profileimg">
+            </div>
+        </div>
+        <div class="left-row">
+            HOME
+        </div>
+        <div class="left-row">
+            VIDEO FEED
+        </div>
+        <div class="left-row">
+            CONFIGURATION
+        </div>
+    </div>
+
+    <!-- video broadcast -->
+    <div class="middle-col-block">
+        <div id="time">
+
+        </div>
+        <div class="video-container">
+            <div id="remote-media"></div>
+        </div>
+        <div class="details-container">
+            <button id="button-join">Join Room</button>
+            <button id="button-leave">Leave Room</button>
+            <div id="log"></div>
+        </div>
+
+    </div>
+
+    <!-- incident report -->
+    <div class="right-col-block">
+        <div class="form-style-6">
+        <h1>INCIDENT REPORT</h1
+        <form action="http://weave-sg.herokuapp.com/echo" method="post">
+            <input type="datetime" name="timeOfOccurrence" placeholder="Date/Time of occurence" />
+            <input type="text" name="name" placeholder="Name of patient" />
+            <textarea name="p_descriptoin" placeholder="Description of patient"></textarea>
+            <input type="text" name="location" value="Location" />
+            <textarea name="t_description" placeholder="Treatment Administered"></textarea>
+            <textarea name="s_description" rows="8" placeholder="Scene Description"></textarea>
+            <textarea name="p_vitals" rows="6" placeholder="Patient's Vitals"></textarea>
+            <textarea name="other" placeholder="Other Key Observations"></textarea>
+
+            <input type="submit" value="Send" />
+        </form>
+        </div>
+    </div>
+    </div>
+  <!-- <div id="controls">
     <div id="preview">
       <p class="instructions">Hello Beautiful</p>
       <div id="local-media"></div>
@@ -16,16 +81,15 @@
     <div id="room-controls">
       <p class="instructions">Room Name:</p>
       <input id="room-name" type="text" placeholder="Enter a room name" />
-      <button id="button-join">Join Room</button>
-      <button id="button-leave">Leave Room</button>
+
     </div>
 
-    <div id="log"></div>
-  </div>
 
-  <script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-  <script src="//media.twiliocdn.com/sdk/js/video/releases/1.14.0/twilio-video.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="../static/assets/js/quickstart.js"></script>
+  </div> -->
+
+<script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+<script src="//media.twiliocdn.com/sdk/js/video/releases/1.14.0/twilio-video.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../static/assets/js/quickstart.js"></script>
 </body>
 </html>

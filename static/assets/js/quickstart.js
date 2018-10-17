@@ -3,6 +3,25 @@ var previewTracks;
 var identity;
 var roomName;
 
+// time function
+function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    // add a zero in front of numbers<10
+    m=checkTime(m);
+    s=checkTime(s);
+    document.getElementById('time').innerHTML=h+":"+m+":"+s;
+    t=setTimeout('startTime()',500);
+}
+function checkTime(i) {
+    if (i<10) {
+        i="0" + i;
+    }
+    return i;
+}
+
 function attachTracks(tracks, container) {
   tracks.forEach(function(track) {
     container.appendChild(track.attach());
@@ -43,21 +62,35 @@ $.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
 
   // Bind button to join room
   document.getElementById('button-join').onclick = function () {
-    roomName = document.getElementById('room-name').value;
-    if (roomName) {
-      log("Joining room '" + roomName + "'...");
+    // roomName = 'document.getElementById('room-name').value';
+    console.log('join room clicked');
+    roomName = 'hello';
 
-      var connectOptions = { name: roomName, logLevel: 'debug' };
-      if (previewTracks) {
-        connectOptions.tracks = previewTracks;
-      }
+    log("Joining room '" + roomName + "'...");
 
-      Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
-        log('Could not connect to Twilio: ' + error.message);
-      });
-    } else {
-      alert('Please enter a room name.');
+    var connectOptions = { name: roomName, logLevel: 'debug' };
+    if (previewTracks) {
+      connectOptions.tracks = previewTracks;
     }
+
+    Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
+      log('Could not connect to Twilio: ' + error.message);
+    });
+    //
+    // if (roomName) {
+    //   log("Joining room '" + roomName + "'...");
+    //
+    //   var connectOptions = { name: roomName, logLevel: 'debug' };
+    //   if (previewTracks) {
+    //     connectOptions.tracks = previewTracks;
+    //   }
+    //
+    //   Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
+    //     log('Could not connect to Twilio: ' + error.message);
+    //   });
+    // } else {
+    //   alert('Please enter a room name.');
+    // }
   };
 
   // Bind button to leave room
@@ -87,7 +120,7 @@ function roomJoined(room) {
     if (participant.identity == 'phone') {
       attachParticipantTracks(participant, previewContainer);
     };
-    
+
   });
 
   // When a participant joins, draw their video on screen
@@ -101,7 +134,7 @@ function roomJoined(room) {
     if (participant.identity == 'phone') {
       attachTracks([track], previewContainer);
     };
-    
+
   });
 
   room.on('trackRemoved', function(track, participant) {
@@ -126,24 +159,6 @@ function roomJoined(room) {
     document.getElementById('button-leave').style.display = 'none';
   });
 }
-
-//  Local video preview
-document.getElementById('button-preview').onclick = function() {
-  var localTracksPromise = previewTracks
-  ? Promise.resolve(previewTracks)
-  : Twilio.Video.createLocalTracks();
-
-  localTracksPromise.then(function(tracks) {
-    previewTracks = tracks;
-    var previewContainer = document.getElementById('local-media');
-    if (!previewContainer.querySelector('video')) {
-      attachTracks(tracks, previewContainer);
-    }
-  }, function(error) {
-    console.error('Unable to access local media', error);
-    log('Unable to access Camera and Microphone');
-  });
-};
 
 // Activity log
 function log(message) {
