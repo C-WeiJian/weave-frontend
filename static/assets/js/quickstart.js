@@ -172,3 +172,45 @@ function leaveRoomIfJoined() {
     activeRoom.disconnect();
   }
 }
+
+// function submitform() {
+//     var data = {};
+//     data["mailto"] = email;
+//     var json = JSON.stringify(data);
+//
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", 'http://weave-sg.herokuapp.com/echo', true);
+//     xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+//     xhr.onload = function () {
+//     //returns otp
+//     var response = JSON.parse(xhr.response);
+//     console.log(response);
+//     //save the info to storage
+//     }
+//     xhr.send(json);
+// }
+
+function submitform(){
+    var form=document.getElementById('myForm');
+
+    form.action = "http://weave-sg.herokuapp.com/echo";
+
+    // collect the form data while iterating over the inputs
+    var data = {};
+    for (var i = 0, ii = form.length; i < ii; ++i) {
+        var input = form[i];
+        data[input.name] = input.value;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            alert(xhr.responseText);
+        }
+    }
+    xhr.send(JSON.stringify(data));
+
+}
+//return false;
+}

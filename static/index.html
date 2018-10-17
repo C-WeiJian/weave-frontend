@@ -55,8 +55,8 @@
     <!-- incident report -->
     <div class="right-col-block">
         <div class="form-style-6">
-        <h1>INCIDENT REPORT</h1
-        <form action="http://weave-sg.herokuapp.com/echo" method="post">
+        <h1>INCIDENT REPORT</h1>
+        <form id="myForm">
             <input type="datetime" name="timeOfOccurrence" placeholder="Date/Time of occurence" />
             <input type="text" name="name" placeholder="Name of patient" />
             <textarea name="p_descriptoin" placeholder="Description of patient"></textarea>
@@ -66,7 +66,7 @@
             <textarea name="p_vitals" rows="6" placeholder="Patient's Vitals"></textarea>
             <textarea name="other" placeholder="Other Key Observations"></textarea>
 
-            <input type="submit" value="Send" />
+            <input type="submit" value="Send" onclick="submitform()" />
         </form>
         </div>
     </div>
