@@ -210,6 +210,15 @@ window.addEventListener("load", function () {
 
     xhr.send(JSON.stringify(data));
   }
+    // Access the form element...
+  var form = document.getElementById("myForm");
+
+  // ...and take over its submit event.
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    sendData();
+  });
 })
 
 window.addEventListener("load", function () {
