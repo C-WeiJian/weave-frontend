@@ -3,6 +3,11 @@ var previewTracks;
 var identity;
 var roomName;
 
+function loadfunctions() {
+  startTime();
+  checkAED();
+}
+
 // time function
 function startTime() {
     var today=new Date();
@@ -173,47 +178,6 @@ function leaveRoomIfJoined() {
   }
 }
 
-// function submitform() {
-//     var data = {};
-//     data["mailto"] = email;
-//     var json = JSON.stringify(data);
-//
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", 'http://weave-sg.herokuapp.com/echo', true);
-//     xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
-//     xhr.onload = function () {
-//     //returns otp
-//     var response = JSON.parse(xhr.response);
-//     console.log(response);
-//     //save the info to storage
-//     }
-//     xhr.send(json);
-// }
-
-// function submitform(){
-//     var form=document.getElementById('myForm');
-
-//     api = "https://weave-sg.herokuapp.com/echo";
-
-//     // collect the form data while iterating over the inputs
-//     var data = {};
-//     for (var i = 0, ii = form.length; i < ii; ++i) {
-//         var input = form[i];
-//         data[input.name] = input.value;
-//     }
-//     console.log(data)
-//     var xhr = new XMLHttpRequest();
-//     xhr.open('POST', api, true);
-//     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-//     xhr.onreadystatechange = function () {
-//         if (xhr.readyState == 4 && xhr.status == 200) {
-//             alert(xhr.responseText);
-//         }
-//     }
-//     xhr.send(JSON.stringify(data));
-
-// }
-
 window.addEventListener("load", function () {
   function sendData() {
     api = "https://weave-sg.herokuapp.com/form";
@@ -245,24 +209,49 @@ window.addEventListener("load", function () {
 
 
     xhr.send(JSON.stringify(data));
+  }
+})
+
+window.addEventListener("load", function () {
+  function sendData() {
+    api_on = "https://weave-sg.herokuapp.com/alarm/on";
+    api_off = "https://weave-sg.herokuapp.com/alarm/off";
+
+    // collect the form data while iterating over the inputs
+    var data = {};
+    for (var i = 0, ii = form.length; i < ii; ++i) {
+        var input = form[i];
+        data[input.name] = input.value;
+    }
+    if (data.bool_aedsound == 'Turn off nearest AED'){
+      api = api_off
+    } else {
+      api = api_on
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', api);
+
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         alert(xhr.responseText);
+    //     }
+    // }
+    // Define what happens on successful data submission
+    xhr.addEventListener("load", function(event) {
+      alert('Action Sent');
+    });
+
+    // Define what happens in case of error
+    xhr.addEventListener("error", function(event) {
+      alert('Oops! Something went wrong.');
+    });
 
 
-    // var XHR = new XMLHttpRequest();
-
-    // // Bind the FormData object and the form element
-    // var FD = new FormData(form);
-
-
-
-    // // Set up our request
-    // XHR.open("POST", "https://weave-sg.herokuapp.com/echo");
-
-    // // The data sent is what the user provided in the form
-    // XHR.send(FD);
+    xhr.send();
   }
 
   // Access the form element...
-  var form = document.getElementById("myForm");
+  var form = document.getElementById("aedform");
 
   // ...and take over its submit event.
   form.addEventListener("submit", function (event) {
@@ -270,4 +259,17 @@ window.addEventListener("load", function () {
 
     sendData();
   });
-});
+})
+
+
+// time function
+async function checkAED() {
+    let alarmResponse = await fetch('http://weave-sg.herokuapp.com/alarm');
+    let jsonResponse = await alarmResponse.json();
+    if (jsonResponse.switch == 1){
+        document.getElementById('aed').value = 'Turn off nearest AED'
+    } else {
+        document.getElementById('aed').value = 'Turn on nearest AED'
+    }
+    t=setTimeout('checkAED()',1000);
+}
