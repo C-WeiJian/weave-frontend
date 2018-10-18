@@ -222,7 +222,7 @@ window.addEventListener("load", function () {
 })
 
 window.addEventListener("load", function () {
-  function sendData() {
+  function sendAED() {
     api_on = "https://weave-sg.herokuapp.com/alarm/on";
     api_off = "https://weave-sg.herokuapp.com/alarm/off";
 
@@ -266,7 +266,7 @@ window.addEventListener("load", function () {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    sendData();
+    sendAED();
   });
 })
 
