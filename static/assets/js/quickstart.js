@@ -130,6 +130,8 @@ function roomJoined(room) {
 
   // When a participant joins, draw their video on screen
   room.on('participantConnected', function(participant) {
+    document.getElementById('formtime').value = new Date();
+    document.getElementById('formlocation').value = 'SCDF HQ';
     log("Joining: '" + participant.identity + "'");
   });
 
