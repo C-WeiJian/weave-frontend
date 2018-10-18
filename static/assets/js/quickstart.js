@@ -264,7 +264,7 @@ window.addEventListener("load", function () {
 
 // time function
 async function checkAED() {
-    let alarmResponse = await fetch('http://weave-sg.herokuapp.com/alarm');
+    let alarmResponse = await fetch('https://weave-sg.herokuapp.com/alarm');
     let jsonResponse = await alarmResponse.json();
     if (jsonResponse.switch == 1){
         document.getElementById('aed').value = 'Turn off nearest AED'
