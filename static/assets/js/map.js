@@ -8,8 +8,15 @@ var mapOptions = {
     zoom:11,
 }
 
-map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
+var myLatLng = new google.maps.LatLng(1.3016514,103.8358701);
+
+var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            animation: google.maps.Animation.DROP,
+});
 //var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 var markers = [];
 
@@ -24,14 +31,22 @@ function setMarkers() {
             animation: google.maps.Animation.DROP,
         });
         // Push marker to markers array
-        var marker = new google.maps.Marker({
+        var marker2 = new google.maps.Marker({
             position: myLatLng2,
             map: map,
             animation: google.maps.Animation.DROP,
         });
 
-
+        marker.addListener('click', function(){
+                      location.href='/operatorview';
+        })
         markers.push(marker);
+
+        marker2.addListener('click', function(){
+                      location.href='/operatorview';
+        })
+        markers.push(marker2);
+
 }
 
 function reloadMarkers() {
@@ -47,8 +62,18 @@ function reloadMarkers() {
 
     // Call set markers to re-add markers
     setMarkers();
+
+    for (var j=0; j<markers.length;j++){
+        markers[j].addListener('click', function(){
+            location.href='/operatorview';
+        })
+    }
+    markers.push(marker);
 }
 
+marker.addListener('click', function() {
+    reloadMarkers();
+});
 
 
 function loadfunctions() {
