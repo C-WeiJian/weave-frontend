@@ -164,12 +164,12 @@ function roomJoined(room) {
 
   // When a participant joins, draw their video on screen
   room.on('participantConnected', function(participant) {
-    document.getElementById('formtime').value = new Date();
-    document.getElementById('formlocation').value = 'SCDF HQ';
+    //document.getElementById('formtime').value = new Date();
+    //document.getElementById('formlocation').value = 'SCDF HQ';
     console.log("participants joined")
     if(participant.identity == 'phone'){
         setMarkers();
-        console.log("creating markers")
+        console.log("creating markers");
     }
     //log("Joining: '" + participant.identity + "'");
   });
@@ -179,6 +179,8 @@ function roomJoined(room) {
     var previewContainer = document.getElementById('remote-media');
     if (participant.identity == 'phone') {
       attachTracks([track], previewContainer);
+      setMarkers();
+      console.log("creating markers2");
     };
 
   });
