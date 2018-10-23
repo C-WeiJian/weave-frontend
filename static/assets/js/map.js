@@ -64,7 +64,7 @@ function startTime() {
     // add a zero in front of numbers<10
     m=checkTime(m);
     s=checkTime(s);
-    document.getElementById('time').innerHTML=h+":"+m+":"+s;
+    //document.getElementById('time').innerHTML=h+":"+m+":"+s;
     t=setTimeout('startTime()',500);
 }
 function checkTime(i) {
@@ -117,15 +117,12 @@ $.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
     console.log('join room clicked');
     roomName = 'hello';
 
-    log("Joining room '" + roomName + "'...");
-
     var connectOptions = { name: roomName, logLevel: 'debug' };
     if (previewTracks) {
       connectOptions.tracks = previewTracks;
     }
 
     Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
-      log('Could not connect to Twilio: ' + error.message);
     });
     //
     // if (roomName) {
@@ -148,9 +145,8 @@ $.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
 function roomJoined(room) {
   activeRoom = room;
 
-  log("Joined as '" + identity + "'");
-  document.getElementById('button-join').style.display = 'none';
-  document.getElementById('button-leave').style.display = 'inline';
+  //document.getElementById('button-join').style.display = 'none';
+  //document.getElementById('button-leave').style.display = 'inline';
 
   // Draw local video, if not already previewing
   var previewContainer = document.getElementById('local-media');
@@ -159,7 +155,6 @@ function roomJoined(room) {
   }
 
   room.participants.forEach(function(participant) {
-    log("Already in Room: '" + participant.identity + "'");
     var previewContainer = document.getElementById('remote-media');
     if (participant.identity == 'phone') {
       attachParticipantTracks(participant, previewContainer);
@@ -176,11 +171,11 @@ function roomJoined(room) {
         setMarkers();
         console.log("creating markers")
     }
-    log("Joining: '" + participant.identity + "'");
+    //log("Joining: '" + participant.identity + "'");
   });
 
   room.on('trackAdded', function(track, participant) {
-    log(participant.identity + " added track: " + track.kind);
+    //log(participant.identity + " added track: " + track.kind);
     var previewContainer = document.getElementById('remote-media');
     if (participant.identity == 'phone') {
       attachTracks([track], previewContainer);
@@ -189,33 +184,26 @@ function roomJoined(room) {
   });
 
   room.on('trackRemoved', function(track, participant) {
-    log(participant.identity + " removed track: " + track.kind);
+    //log(participant.identity + " removed track: " + track.kind);
     detachTracks([track]);
   });
 
   // When a participant disconnects, note in log
   room.on('participantDisconnected', function(participant) {
-    log("Participant '" + participant.identity + "' left the room");
+    //log("Participant '" + participant.identity + "' left the room");
     detachParticipantTracks(participant);
   });
 
   // When we are disconnected, stop capturing local video
   // Also remove media for all remote participants
   room.on('disconnected', function() {
-    log('Left');
+    //log('Left');
     detachParticipantTracks(room.localParticipant);
     room.participants.forEach(detachParticipantTracks);
     activeRoom = null;
-    document.getElementById('button-join').style.display = 'inline';
-    document.getElementById('button-leave').style.display = 'none';
+    //document.getElementById('button-join').style.display = 'inline';
+    //document.getElementById('button-leave').style.display = 'none';
   });
-}
-
-// Activity log
-function log(message) {
-  var logDiv = document.getElementById('log');
-  logDiv.innerHTML += '<p>&gt;&nbsp;' + message + '</p>';
-  logDiv.scrollTop = logDiv.scrollHeight;
 }
 
 function leaveRoomIfJoined() {
