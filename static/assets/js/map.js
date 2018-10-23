@@ -53,7 +53,6 @@ function reloadMarkers() {
 
 function loadfunctions() {
   startTime();
-  checkAED();
 }
 
 // time function
@@ -114,7 +113,6 @@ $.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
   // document.getElementById('room-controls').style.display = 'block';
 
   // Bind button to join room
-  document.getElementById('button-join').onclick = function () {
     // roomName = 'document.getElementById('room-name').value';
     console.log('join room clicked');
     roomName = 'hello';
@@ -144,13 +142,6 @@ $.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
     // } else {
     //   alert('Please enter a room name.');
     // }
-  };
-
-  // Bind button to leave room
-  document.getElementById('button-leave').onclick = function () {
-    log('Leaving room...');
-    activeRoom.disconnect();
-  };
 });
 
 // Successfully connected!
@@ -265,15 +256,6 @@ window.addEventListener("load", function () {
 
     xhr.send(JSON.stringify(data));
   }
-    // Access the form element...
-  var form = document.getElementById("myForm");
-
-  // ...and take over its submit event.
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    sendData();
-  });
 })
 
 window.addEventListener("load", function () {
@@ -315,25 +297,4 @@ window.addEventListener("load", function () {
   }
 
   // Access the form element...
-  var form = document.getElementById("aedform");
-
-  // ...and take over its submit event.
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    sendAED();
-  });
 })
-
-
-// time function
-async function checkAED() {
-    let alarmResponse = await fetch('https://weave-sg.herokuapp.com/alarm');
-    let jsonResponse = await alarmResponse.json();
-    if (jsonResponse.switch == 1){
-        document.getElementById('aed').value = 'Turn off nearest AED'
-    } else {
-        document.getElementById('aed').value = 'Turn on nearest AED'
-    }
-    t=setTimeout('checkAED()',1000);
-}
