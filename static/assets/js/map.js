@@ -3,6 +3,38 @@ var previewTracks;
 var identity;
 var roomName;
 
+var mapProp= {
+    center:new google.maps.LatLng(1.3016514,103.8358701),
+    zoom:11,
+};
+
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+
+var myLatLng = {lat: 1.3016514, lng: 103.8358701};
+
+function createMarker(){
+
+    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    var marker = new google.maps.Marker({
+        position: {lat: 1.5016514, lng: 107.8358701},
+        map: map,
+        title: 'Hello World!'
+    });
+}
+
+var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'Hello World!'
+    });
+
+marker.addListener('click', function() {
+    console.log("creating new marker");
+    createMarker();
+});
+
+
 function loadfunctions() {
   startTime();
   checkAED();
@@ -66,7 +98,7 @@ $.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
   // document.getElementById('room-controls').style.display = 'block';
 
   // Bind button to join room
-
+  document.getElementById('button-join').onclick = function () {
     // roomName = 'document.getElementById('room-name').value';
     console.log('join room clicked');
     roomName = 'hello';
@@ -96,6 +128,7 @@ $.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
     // } else {
     //   alert('Please enter a room name.');
     // }
+  };
 
   // Bind button to leave room
   document.getElementById('button-leave').onclick = function () {
