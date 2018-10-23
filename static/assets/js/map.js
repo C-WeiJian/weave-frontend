@@ -3,36 +3,50 @@ var previewTracks;
 var identity;
 var roomName;
 
-var mapProp= {
+var mapOptions = {
     center:new google.maps.LatLng(1.3016514,103.8358701),
     zoom:11,
-};
-
-var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-
-var myLatLng = {lat: 1.3016514, lng: 103.8358701};
-
-function createMarker(){
-
-    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-    var marker = new google.maps.Marker({
-        position: {lat: 1.5016514, lng: 107.8358701},
-        map: map,
-        title: 'Hello World!'
-    });
 }
 
-var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    title: 'Hello World!'
-    });
+map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-marker.addListener('click', function() {
-    console.log("creating new marker");
-    createMarker();
-});
+//var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var markers = [];
+
+function setMarkers() {
+        var myLatLng = new google.maps.LatLng(1.3016514,103.8358701);
+        var myLatLng2 = new google.maps.LatLng(1.5016514,105.8358701);
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            animation: google.maps.Animation.DROP,
+        });
+        // Push marker to markers array
+        var marker = new google.maps.Marker({
+            position: myLatLng2,
+            map: map,
+            animation: google.maps.Animation.DROP,
+        });
+
+
+        markers.push(marker);
+}
+
+function reloadMarkers() {
+
+    // Loop through markers and set map to null for each
+    for (var i=0; i<markers.length; i++) {
+
+        markers[i].setMap(null);
+    }
+
+    // Reset the markers array
+    markers = [];
+
+    // Call set markers to re-add markers
+    setMarkers();
+}
+
 
 
 function loadfunctions() {
@@ -92,7 +106,7 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
 // from the room, if joined.
 window.addEventListener('beforeunload', leaveRoomIfJoined);
 
-$.getJSON('https://weave-sg.herokuapp.com/token/operator', function(data) {
+$.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
   identity = data.identity;
 
   // document.getElementById('room-controls').style.display = 'block';
@@ -164,6 +178,9 @@ function roomJoined(room) {
   room.on('participantConnected', function(participant) {
     document.getElementById('formtime').value = new Date();
     document.getElementById('formlocation').value = 'SCDF HQ';
+    if(participant.identity == 'phone'){
+        setMarkers();
+    }
     log("Joining: '" + participant.identity + "'");
   });
 
