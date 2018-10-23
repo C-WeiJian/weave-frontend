@@ -14,6 +14,8 @@ map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 var markers = [];
 
 function setMarkers() {
+
+        console.log("generating points");
         var myLatLng = new google.maps.LatLng(1.3016514,103.8358701);
         var myLatLng2 = new google.maps.LatLng(1.5016514,105.8358701);
         var marker = new google.maps.Marker({
