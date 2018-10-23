@@ -180,8 +180,10 @@ function roomJoined(room) {
   room.on('participantConnected', function(participant) {
     document.getElementById('formtime').value = new Date();
     document.getElementById('formlocation').value = 'SCDF HQ';
+    console.log("participants joined")
     if(participant.identity == 'phone'){
         setMarkers();
+        console.log("creating markers")
     }
     log("Joining: '" + participant.identity + "'");
   });
