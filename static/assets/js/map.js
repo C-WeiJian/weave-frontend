@@ -4,27 +4,28 @@ var identity;
 var roomName;
 
 var mapOptions = {
-    center:new google.maps.LatLng(1.3016514,103.8358701),
+    center:new google.maps.LatLng(1.3516514,103.8358701),
     zoom:11,
 }
 
 var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-var myLatLng = new google.maps.LatLng(1.3016514,103.8358701);
+var myLatLng = new google.maps.LatLng(1.3516514,103.8358701);
 
 var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            animation: google.maps.Animation.DROP,
 });
 //var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 var markers = [];
 
+$('#accept').click(function () {
+    location.href='/operatorview';
+});
+
 function setMarkers() {
 
         console.log("generating points");
-        var myLatLng = new google.maps.LatLng(1.3016514,103.8358701);
-        var myLatLng2 = new google.maps.LatLng(1.5016514,105.8358701);
+        var myLatLng = new google.maps.LatLng(1.3516514,103.8358701);
+        var myLatLng2 = new google.maps.LatLng(1.3516514,105.8358701);
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
@@ -46,6 +47,9 @@ function setMarkers() {
                       location.href='/operatorview';
         })
         markers.push(marker2);
+
+        map.setZoom(13);
+        map.panTo(marker.position);
 
 }
 
@@ -169,23 +173,13 @@ $.getJSON('https://weave-sg.herokuapp.com/token/hq', function(data) {
 // Successfully connected!
 function roomJoined(room) {
   activeRoom = room;
-
-  //document.getElementById('button-join').style.display = 'none';
-  //document.getElementById('button-leave').style.display = 'inline';
-
-  // Draw local video, if not already previewing
-  var previewContainer = document.getElementById('local-media');
-  if (!previewContainer.querySelector('video')) {
-    attachParticipantTracks(room.localParticipant, previewContainer);
-  }
-
   room.participants.forEach(function(participant) {
     var previewContainer = document.getElementById('remote-media');
     if (participant.identity == 'phone') {
-      attachParticipantTracks(participant, previewContainer);
+        attachParticipantTracks(participant, previewContainer);
     };
 
-  });
+});
 
   // When a participant joins, draw their video on screen
   room.on('participantConnected', function(participant) {
@@ -195,7 +189,10 @@ function roomJoined(room) {
     if(participant.identity == 'phone'){
         setMarkers();
         console.log("creating markers");
+        $('.popup').fadeIn();
     }
+
+
     //log("Joining: '" + participant.identity + "'");
   });
 
@@ -310,6 +307,5 @@ window.addEventListener("load", function () {
 
     xhr.send();
   }
-
   // Access the form element...
 })
