@@ -10,7 +10,7 @@ var mapOptions = {
 
 var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-var myLatLng = new google.maps.LatLng(1.3516514,103.8358701);
+var myLatLng = new google.maps.LatLng(1.3483,103.6831);
 
 var marker = new google.maps.Marker({
 });
@@ -24,29 +24,29 @@ $('#accept').click(function () {
 function setMarkers() {
 
         console.log("generating points");
-        var myLatLng = new google.maps.LatLng(1.3516514,103.8358701);
-        var myLatLng2 = new google.maps.LatLng(1.3516514,105.8358701);
+        var myLatLng = new google.maps.LatLng(1.3483,103.6831);
+        //var myLatLng2 = new google.maps.LatLng(1.3516514,105.8358701);
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
             animation: google.maps.Animation.DROP,
         });
         // Push marker to markers array
-        var marker2 = new google.maps.Marker({
-            position: myLatLng2,
-            map: map,
-            animation: google.maps.Animation.DROP,
-        });
+        //var marker2 = new google.maps.Marker({
+        //    position: myLatLng2,
+        //    map: map,
+        //    animation: google.maps.Animation.DROP,
+        //});
 
         marker.addListener('click', function(){
                       location.href='/operatorview';
         })
         markers.push(marker);
 
-        marker2.addListener('click', function(){
-                      location.href='/operatorview';
-        })
-        markers.push(marker2);
+        //marker2.addListener('click', function(){
+        //              location.href='/operatorview';
+        //})
+        //markers.push(marker2);
 
         map.setZoom(13);
         map.panTo(marker.position);
